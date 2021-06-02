@@ -1,0 +1,31 @@
+<div class="list row">
+    <div class="col-md-6">
+        <h4>Account Info</h4>
+    </div>
+    <div class="col-md-12">
+        <div>
+            <div>
+                <label><strong>First Name:</strong></label> {{ currentTutorial.firstName }}
+            </div>
+            <div>
+                <label><strong>Last Name:</strong></label>
+                {{ currentTutorial.lastName }}
+            </div>
+            <div>
+                <label><strong>Email:</strong></label>
+                {{ currentTutorial.email }}
+            </div>
+            <div>
+                <label><strong>Account Type:</strong></label>
+                {{ currentTutorial.accountType}}
+            </div>
+
+
+        </div>
+
+        <div *ngIf="!currentTutorial">
+            <br />
+            <p> Error while getting Account info</p>
+        </div>
+    </div>
+</div>

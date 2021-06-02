@@ -1,0 +1,25 @@
+<div class="list row">
+  <div class="col-md-6">
+    <h4>Assessment List</h4>
+  </div>
+  <div class="col-md-12">
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Assessment Id</th>
+        <th>Assessment Name</th>
+        <th>Duration</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let assessment of assessmentList; let i=index">
+        <td><a href="http://localhost:8080/mettl-api-intg/v1/getAssessment/{{ assessment.id }}">{{ assessment.id }}</a></td>
+        <td>{{ assessment.name }}</td>
+        <td>{{ assessment.duration }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
