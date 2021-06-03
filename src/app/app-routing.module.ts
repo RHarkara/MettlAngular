@@ -5,6 +5,8 @@ import { TutorialDetailsComponent } from './components/tutorial-details/tutorial
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import {AssessmentListComponent} from './components/assessment-list/assessment-list.component';
 import {MettlAccountinfoComponent} from './components/mettl-accountinfo/mettl-accountinfo.component';
+import {AllassessmentsComponent} from './components/allassessments/allassessments.component';
+import {CreatescheduleComponent} from './components/createschedule/createschedule.component';
 
 const routes: Routes = [
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
@@ -12,7 +14,9 @@ const routes: Routes = [
   { path: 'tutorials/:id', component: TutorialDetailsComponent },
   { path: 'add', component: AddTutorialComponent },
   { path: 'assessments', component: AssessmentListComponent },
-  { path: 'accountInfo', component: MettlAccountinfoComponent }
+  { path: 'accountInfo', component: MettlAccountinfoComponent },
+  { path: 'allAssessments', component: AllassessmentsComponent },
+  { path: 'createScheduleAssessment', component: CreatescheduleComponent }
 ];
 
 @NgModule({

@@ -16,11 +16,13 @@ export class MettlApiService {
         return this.http.get(this.apiURL + '/account?' + parameter);
     }
 
-    getAllAssessments(): Observable<any> {
-        return this.http.get(this.apiURL + '/getAllAssessments');
+    getAllAssessments(parameter): Observable<any> {
+        console.log(this.apiURL + '/assessments?' + parameter);
+        return this.http.get(this.apiURL + '/assessments?' + parameter);
     }
 
-    createSchedule(data): Observable<any> {
-        return this.http.post(this.apiURL + '/assessments/schedules', data);
+    createSchedule(data, parameters): Observable<any> {
+        console.log(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters);
+        return this.http.post(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters, data);
     }
 }
