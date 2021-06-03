@@ -1,0 +1,57 @@
+<div style="width: 400px; margin: auto;">
+    <h4>Schedule Assessment</h4>
+    <div class="submit-form">
+        <div *ngIf="!submitted">
+            <div class="form-group">
+                <label for="title">Assessment Id</label>
+                <select
+                        class="form-control"
+                        id="assessmentId"
+                        required
+                        [(ngModel)]="scheduleDetailsMttl.assessmentId"
+                        name="assessmentId">
+                    <option *ngFor="let assessment of assessmentList" [value]="assessment.id" >{{assessment.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Name</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        required
+                        [(ngModel)]="scheduleDetailsMttl.name"
+                        name="title"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="recipientsList">Recipients</label>
+                <input
+                        class="form-control"
+                        id="recipientsList"
+                        required
+                        [(ngModel)]="recipientsList"
+                        name="recipientsList"
+                />
+            </div>
+
+            <button (click)="createSchedule()" class="btn btn-success">Submit</button>
+        </div>
+
+    </div>
+    <div *ngIf="createdSchedule">
+        <div>
+            <label><strong>Assessment Id:</strong></label> {{ createdSchedule.assessmentId }}
+        </div>
+        <div>
+            <label><strong>Assessment Name:</strong></label>
+            {{ createdSchedule.name }}
+        </div>
+        <div>
+            <label><strong>Access URL:</strong></label>
+            <a href="{{ createdSchedule.accessUrl }}">{{ createdSchedule.accessUrl }}</a>
+        </div>
+    </div>
+</div>
