@@ -21,8 +21,8 @@ export class MettlApiService {
         return this.http.get(this.apiURL + '/assessments?' + parameter);
     }
 
-    createSchedule(data, parameters): Observable<any> {
+    createSchedule(data, parameters, headers): Observable<any> {
         console.log(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters);
-        return this.http.post(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters, data);
+        return this.http.post(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters, data, {  headers});
     }
 }
