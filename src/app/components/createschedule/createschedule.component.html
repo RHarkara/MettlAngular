@@ -8,7 +8,7 @@
                         class="form-control"
                         id="assessmentId"
                         required
-                        [(ngModel)]="scheduleDetailsMttl.assessmentId"
+                        [(ngModel)]="assessmentId"
                         name="assessmentId">
                     <option *ngFor="let assessment of assessmentList" [value]="assessment.id" >{{assessment.name}}</option>
                 </select>

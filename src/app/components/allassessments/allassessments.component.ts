@@ -2,42 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import {GlobalConstants} from '../../global-constants';
 import {MettlApiService} from '../../services/mettl.api.service';
 import CryptoJS from 'crypto-js';
+import {MettlApiHelperService} from "../../services/mettl.api.helper.service";
 
 @Component({
   selector: 'app-allassessments',
   templateUrl: './allassessments.component.html',
   styleUrls: ['./allassessments.component.css']
 })
-export class AllassessmentsComponent implements OnInit {
-  apiURL = GlobalConstants.apiURL.concat('/assessments');
-  publicKey = GlobalConstants.publicKey;
-  privateKey = GlobalConstants.privateKey;
+export class AllAssessmentsComponent implements OnInit {
   HTTPVerb = 'GET';
-  timestamp = Math.floor(new Date().getTime() / 1000);
   assessmentList: any;
-  currentIndex = -1;
   title = '';
-  constructor(
-      private mettlApiService: MettlApiService
-  ) { }
+  constructor(private mettlApiService: MettlApiService,
+              private mettlApiHelperService: MettlApiHelperService) {
+  }
 
   ngOnInit(): void {
-    const parameters = this.makeSignature();
-    this.getAllAssessments(parameters);
+    this.getAllAssessments();
   }
-  private makeSignature(): string {
-    const concatenatedString = this.HTTPVerb + this.apiURL + '\n' + this.publicKey + '\n' + this.timestamp;
-    console.log('concatinatedString:' + concatenatedString);
-    const encrypted = CryptoJS.HmacSHA1(concatenatedString, this.privateKey);
-    const asgn = CryptoJS.enc.Base64.stringify(encrypted);
-    return 'ak=' + this.publicKey + '&asgn=' + asgn + '&ts=' + this.timestamp;
-  }
-  getAllAssessments(parameters: string): void {
-    this.mettlApiService.getAllAssessments(parameters)
+
+  getAllAssessments(): void {
+    const apiURL = GlobalConstants.apiURL.concat('/assessments');
+    const parameters = this.mettlApiHelperService.getRequestParameters(this.HTTPVerb, apiURL, null);
+    this.mettlApiService.getAllAssessments(parameters, apiURL)
         .subscribe(
             data => {
               this.assessmentList = data.assessments;
-              console.log(data);
+              console.log(this.assessmentList);
             },
             error => {
               console.log(error);

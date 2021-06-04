@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MettlApiService} from '../../services/mettl.api.service';
 import {GlobalConstants} from '../../global-constants';
 import CryptoJS from 'crypto-js';
+import {MettlApiHelperService} from "../../services/mettl.api.helper.service";
 
 @Component({
   selector: 'app-mettl-accountinfo',
@@ -10,11 +11,8 @@ import CryptoJS from 'crypto-js';
   styleUrls: ['./mettl-accountinfo.component.css']
 })
 export class MettlAccountinfoComponent implements OnInit {
-  apiURL = GlobalConstants.apiURL.concat('/account');
-  publicKey = GlobalConstants.publicKey;
-  privateKey = GlobalConstants.privateKey;
+
   HTTPVerb = 'GET';
-  timestamp = Math.floor(new Date().getTime() / 1000);
   currentTutorial = {
     firstName : '',
     lastName : '',
@@ -24,28 +22,24 @@ export class MettlAccountinfoComponent implements OnInit {
   message = '';
   constructor(
       private mettlApiService: MettlApiService,
+      private mettlApiHelperService: MettlApiHelperService,
       private route: ActivatedRoute,
       private router: Router) { }
+
   ngOnInit(): void {
-    this.message = '';
-    const parameters = this.makeSignature();
-    this.getAccountInfo(parameters);
+    this.getAccountInfo();
   }
 
-  private makeSignature(): string {
-    const concatenatedString = this.HTTPVerb + this.apiURL + '\n' + this.publicKey + '\n' + this.timestamp;
-    console.log('concatinatedString:' + concatenatedString);
-    const encrypted = CryptoJS.HmacSHA1(concatenatedString, this.privateKey);
-    const asgn = CryptoJS.enc.Base64.stringify(encrypted);
-    return 'ak=' + this.publicKey + '&asgn=' + asgn + '&ts=' + this.timestamp;
-  }
-
-  getAccountInfo(parameters: string): void {
-    this.mettlApiService.getAccountInfo(parameters)
+  getAccountInfo(): void {
+    const apiURL = GlobalConstants.apiURL.concat('/account');
+    const parameters = this.mettlApiHelperService.getRequestParameters(this.HTTPVerb, apiURL, null);
+    this.mettlApiService.getAccountInfo(parameters, apiURL)
         .subscribe(
             data => {
-              this.currentTutorial = data.accountInfo;
               console.log(data);
+              if (data.status === 'SUCCESS') {
+                this.currentTutorial = data.accountInfo;
+              }
             },
             error => {
               console.log(error);

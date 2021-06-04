@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GlobalConstants} from '../../global-constants';
 import {MettlApiService} from '../../services/mettl.api.service';
-import CryptoJS from 'crypto-js';
-import { HttpHeaders } from '@angular/common/http';
+import {MettlApiHelperService} from "../../services/mettl.api.helper.service";
 
 @Component({
   selector: 'app-createschedule',
@@ -10,102 +9,84 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./createschedule.component.css']
 })
 export class CreatescheduleComponent implements OnInit {
-  apiURL = GlobalConstants.apiURL.concat('/assessments');
-  apiURLCre = GlobalConstants.apiURL.concat('/assessments');
-  publicKey = GlobalConstants.publicKey;
-  privateKey = GlobalConstants.privateKey;
-  HTTPVerb = 'GET';
-  HTTPVerbCre = 'POST';
-  timestamp = Math.floor(new Date().getTime() / 1000);
-  assessmentList: any;
-  currentIndex = -1;
+
+  HTTPVerb = 'POST';
   title = '';
-  assessmentId: string;
+  assessmentId: string
   scheduleDetailsMttl = {
-    assessmentId: '',
-  name: '',
-  scheduleType: 'AlwaysOn',
-  scheduleWindow: null,
-  webProctoring: {
-    enabled: false
-  },
-  visualProctoring: {
-    mode: 'OFF',
-    options: {
-      candidateScreenCapture: false,
-      candidateAuthorization: false
-    }
-  },
-  access: {
-    type: 'OpenForAll',
-    candidates: null,
-    sendEmail: false
-  },
-  ipAccessRestriction: {
-    enabled: false
-  },
-  testGradeNotification: {
-    enabled: true,
-    recipients: []
-  },
-  sourceApp: 'Ojas-Java-Test',
-  testStartNotificationUrl: 'http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testStartNotificationUrl',
-  testFinishNotificationUrl: 'http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testFinishNotificationUrl',
-  testGradedNotificationUrl: 'http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testGradedNotificationUrl',
-  testResumeEnabledForExpiredTestURL: 'http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testResumeEnabledForExpiredTestURL'
-  };
+    name: "",
+    imageProctoring: false,
+    webProctoring: {
+      enabled: false
+    },
+    scheduleType: "AlwaysOn",
+    scheduleWindow: null,
+    access: {
+      type: "OpenForAll",
+      candidates: null,
+      sendEmail: false,
+      sendReminders: null,
+      candidateCrfPrefilled: false
+    },
+    ipAccessRestriction: {
+      enabled: false
+    },
+    sourceApp: "Ojas-Java-Test",
+    testStartNotificationUrl: "http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testStartNotificationUrl",
+    testFinishNotificationUrl: "http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testFinishNotificationUrl",
+    testGradedNotificationUrl: "http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testGradedNotificationUrl",
+    testResumeEnabledForExpiredTestURL: "http://mettlintegration-env.eba-ff247mbm.us-east-1.elasticbeanstalk.com/mettl-api-intg/testResumeEnabledForExpiredTestURL",
+    visualProctoring: null,
+    gradeNotificationSettings: null,
+    testGradeNotification: {
+      enabled: true,
+      recipients: []
+    },
+    allowTestResume: null,
+    secureBrowser: null,
+    candidateAuthProctored: false
+  }
+
   recipientsList: string;
-  // assessmentList: [];
   submitted = false;
+  assessmentList: any;
 
   createdSchedule: object;
-  constructor(private mettlApiService: MettlApiService) { }
+  constructor(private mettlApiService: MettlApiService,
+              private mettlApiHelperService: MettlApiHelperService) { }
 
   ngOnInit(): void {
-    const parameters = this.makeSignature();
-    // const parametersCre = this.makeSignatureCre();
-    this.getAllAssessments(parameters);
+    this.getAllAssessments();
   }
   createSchedule(): void {
-    const parametersCre = this.makeSignatureCre();
-    const headers = new HttpHeaders()
-        .set('content-type', 'application/x-www-form-urlencoded')
-        .set('Access-Control-Allow-Origin', '*');
+    const apiURL = GlobalConstants.apiURL.concat('/assessments/').concat(this.assessmentId).concat('/schedules');
+    let paramMap = new Map();
     this.scheduleDetailsMttl.testGradeNotification.recipients = this.recipientsList.split(',');
-    console.log('createSchedule reuqest data' + JSON.stringify(this.scheduleDetailsMttl));
-    this.mettlApiService.createSchedule(this.scheduleDetailsMttl, parametersCre, headers)
+    paramMap.set("sc", JSON.stringify(this.scheduleDetailsMttl));
+    const parameters = this.mettlApiHelperService.getRequestParameters(this.HTTPVerb, apiURL, paramMap);
+    this.mettlApiService.createSchedule(parameters, apiURL)
         .subscribe(
             response => {
+              console.log(response);
               if (response.status === 'SUCCESS') {
                 this.createdSchedule = response.createdSchedule;
               }
-              console.log(response);
               this.submitted = true;
             },
             error => {
               console.log(error);
             });
   }
-  private makeSignature(): string {
-    const concatenatedString = this.HTTPVerb + this.apiURL + '\n' + this.publicKey + '\n' + this.timestamp;
-    console.log('concatinatedString:' + concatenatedString);
-    const encrypted = CryptoJS.HmacSHA1(concatenatedString, this.privateKey);
-    const asgn = CryptoJS.enc.Base64.stringify(encrypted);
-    return 'ak=' + this.publicKey + '&asgn=' + asgn + '&ts=' + this.timestamp;
-  }
-  private makeSignatureCre(): string {
-    const concatenatedString = this.HTTPVerbCre + this.apiURLCre + '\n' + this.publicKey + '\n' + this.timestamp;
-    console.log('concatinatedString:' + concatenatedString);
-    const encrypted = CryptoJS.HmacSHA1(concatenatedString, this.privateKey);
-    const asgn = CryptoJS.enc.Base64.stringify(encrypted);
-    return 'ak=' + this.publicKey + '&asgn=' + asgn + '&ts=' + this.timestamp;
-  }
-  getAllAssessments(parameters: string): void {
-    this.mettlApiService.getAllAssessments(parameters)
+
+  getAllAssessments(): void {
+    let HTTPVerb = 'GET';
+    const apiURL = GlobalConstants.apiURL.concat('/assessments');
+    const parameters = this.mettlApiHelperService.getRequestParameters(HTTPVerb, apiURL, null);
+    this.mettlApiService.getAllAssessments(parameters, apiURL)
         .subscribe(
             data => {
               this.assessmentList = data.assessments;
-              console.log(data);
+              console.log(this.assessmentList);
             },
             error => {
               console.log(error);

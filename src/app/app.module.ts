@@ -10,7 +10,7 @@ import { TutorialDetailsComponent } from './components/tutorial-details/tutorial
 import { TutorialsListComponent } from './components/tutorials-list/tutorials-list.component';
 import {AssessmentListComponent} from './components/assessment-list/assessment-list.component';
 import { MettlAccountinfoComponent } from './components/mettl-accountinfo/mettl-accountinfo.component';
-import { AllassessmentsComponent } from './components/allassessments/allassessments.component';
+import { AllAssessmentsComponent } from './components/allassessments/allassessments.component';
 import { CreatescheduleComponent } from './components/createschedule/createschedule.component';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { CreatescheduleComponent } from './components/createschedule/createsched
     TutorialsListComponent,
     AssessmentListComponent,
     MettlAccountinfoComponent,
-    AllassessmentsComponent,
+    AllAssessmentsComponent,
     CreatescheduleComponent
   ],
   imports: [
@@ -30,7 +30,7 @@ import { CreatescheduleComponent } from './components/createschedule/createsched
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AllAssessmentsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

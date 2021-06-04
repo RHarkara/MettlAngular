@@ -9,7 +9,6 @@ import { TutorialService } from 'src/app/services/tutorial.service';
 export class AssessmentListComponent implements OnInit {
 
   assessmentList: any;
-  currentIndex = -1;
   title = '';
 
   constructor(private tutorialService: TutorialService) { }

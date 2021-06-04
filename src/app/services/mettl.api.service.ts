@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {GlobalConstants} from '../global-constants';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class MettlApiService {
-    apiURL = GlobalConstants.apiURL;
     constructor(private http: HttpClient) { }
 
-    getAccountInfo(parameter): Observable<any> {
-        console.log(this.apiURL + '/account?' + parameter);
-        return this.http.get(this.apiURL + '/account?' + parameter);
+    getAccountInfo(parameters: Map<string, string>, apiURL): Observable<any> {
+        let params = this.prepareQueryString(parameters, apiURL);
+        return this.http.get(apiURL + '?' +params);
     }
 
-    getAllAssessments(parameter): Observable<any> {
-        console.log(this.apiURL + '/assessments?' + parameter);
-        return this.http.get(this.apiURL + '/assessments?' + parameter);
+    private prepareQueryString(parameters: Map<string, string>, apiURL) {
+        let paramsList: Array<string> = [];
+        parameters.forEach((value: string, key: string) => {
+            paramsList.push(key + '=' + value);
+        });
+        let params = paramsList.join('&');
+        console.log(apiURL, params);
+        return params;
     }
 
-    createSchedule(data, parameters, headers): Observable<any> {
-        console.log(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters);
-        return this.http.post(this.apiURL + '/assessments/' + data.assessmentId + '/schedules?' + parameters, data, {  headers});
+    getAllAssessments(parameters: Map<string, string>, apiURL): Observable<any> {
+        let params = this.prepareQueryString(parameters, apiURL);
+        return this.http.get(apiURL + '?' + params);
+    }
+
+    createSchedule(parameters: Map<string, string>, apiURL): Observable<any> {
+        let paramsList: Array<string> = [];
+        parameters.forEach((value: string, key: string) => {
+            paramsList.push(key + '=' + value);
+        });
+        let params = paramsList.join('&');
+        console.log(apiURL, params);
+        return this.http.post(apiURL, params);
     }
 }

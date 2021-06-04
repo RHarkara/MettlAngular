@@ -5,7 +5,7 @@ import { TutorialDetailsComponent } from './components/tutorial-details/tutorial
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import {AssessmentListComponent} from './components/assessment-list/assessment-list.component';
 import {MettlAccountinfoComponent} from './components/mettl-accountinfo/mettl-accountinfo.component';
-import {AllassessmentsComponent} from './components/allassessments/allassessments.component';
+import {AllAssessmentsComponent} from './components/allassessments/allassessments.component';
 import {CreatescheduleComponent} from './components/createschedule/createschedule.component';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'add', component: AddTutorialComponent },
   { path: 'assessments', component: AssessmentListComponent },
   { path: 'accountInfo', component: MettlAccountinfoComponent },
-  { path: 'allAssessments', component: AllassessmentsComponent },
+  { path: 'allAssessments', component: AllAssessmentsComponent },
   { path: 'createScheduleAssessment', component: CreatescheduleComponent }
 ];
 
