@@ -1,0 +1,32 @@
+<div style="width: 400px; margin: auto;">
+    <h4>Candidate Test Status</h4>
+    <div class="submit-form">
+        <div>
+            <div class="form-group">
+                <label for="title">Access Key</label>
+                <select
+                        class="form-control"
+                        id="assessmentId"
+                        required
+                        [(ngModel)]="accessKey"
+                        name="assessmentId">
+                    <option *ngFor="let assessment of scheduleList" [value]="assessment.id" >{{assessment.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Candidate Email</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        required
+                        [(ngModel)]="email"
+                        name="email"
+                />
+            </div>
+
+            <button (click)="getTestStatus()" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</div>

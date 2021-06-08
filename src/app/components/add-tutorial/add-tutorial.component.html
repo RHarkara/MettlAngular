@@ -15,7 +15,7 @@
       </div>
 
       <div class="form-group">
-        <label for="title">Name</label>
+        <label for="title">Assessment Name</label>
         <input
           type="text"
           class="form-control"
@@ -27,7 +27,86 @@
       </div>
 
       <div class="form-group">
-        <label for="recipientsList">Recipients</label>
+        <label for="assessmentDate">Assessment Date</label>
+        <input
+                type="text"
+                class="form-control"
+                id="assessmentDate"
+                required
+                [(ngModel)]="scheduleDetails.assessmentDate"
+                name="assessmentDate"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="accessType">Access Type</label>
+        <select
+                class="form-control"
+                id="accessType"
+                required
+                [(ngModel)]="scheduleDetails.accessType"
+                name="accessType">
+          <option *ngFor="let accessType of accessTypes" [value]="accessType" >{{accessType}}</option>
+        </select>
+      </div>
+
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th colspan="3">Enter Candidate Details</th>
+        </tr>
+        <tr>
+          <th>Action</th>
+          <th>Candidate First Name</th>
+          <th>Candidate Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td (click)="addRow(candidate)">
+            <i class="fa fa-plus fa-2x"></i>
+          </td>
+          <td>
+            <input [(ngModel)]="candidate.name" class="form-control" type="text" />
+          </td>
+          <td>
+            <input [(ngModel)]="candidate.email" class="form-control" type="text" />
+          </td>
+        </tr>
+
+        <tr *ngFor="let candidateObj of candidateArray; let i = index">
+          <td (click)="deleteRow(i)">
+            <i class="fa fa-trash fa-2x"></i>
+          </td>
+          <td>
+            {{candidateObj.name}}
+          </td>
+          <td>
+            {{candidateObj.email}}
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <div class="form-group">
+        <label for="OpenForAll">Send Test Link: </label>
+        <input
+                type="radio"
+                id="OpenForAll"
+                [(ngModel)]="scheduleDetails.sendEmail"
+                name="sendEmail" value="true">
+        <label for="ByInvitation">TRUE</label>
+        <input
+                type="radio"
+                id="ByInvitation"
+                [(ngModel)]="scheduleDetails.sendEmail"
+                name="sendEmail" value="false">
+        <label for="ByInvitation">FALSE</label>
+      </div>
+
+      <div class="form-group">
+        <label for="recipientsList">Admin Notification</label>
         <input
           class="form-control"
           id="recipientsList"

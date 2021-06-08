@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-const baseUrl = 'http://localhost:8090/mettl-api-intg/v1';
+const baseUrl = 'http://localhost:8080/mettl-api-intg/v1';
 
 @Injectable({
   providedIn: 'root'

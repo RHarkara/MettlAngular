@@ -7,6 +7,7 @@ import {AssessmentListComponent} from './components/assessment-list/assessment-l
 import {MettlAccountinfoComponent} from './components/mettl-accountinfo/mettl-accountinfo.component';
 import {AllAssessmentsComponent} from './components/allassessments/allassessments.component';
 import {CreatescheduleComponent} from './components/createschedule/createschedule.component';
+import {CandidateTestStatusComponent} from "./components/candidate-test-status/candidate-test-status.component";
 
 const routes: Routes = [
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'assessments', component: AssessmentListComponent },
   { path: 'accountInfo', component: MettlAccountinfoComponent },
   { path: 'allAssessments', component: AllAssessmentsComponent },
-  { path: 'createScheduleAssessment', component: CreatescheduleComponent }
+  { path: 'createScheduleAssessment', component: CreatescheduleComponent },
+  { path: 'candidateTestStatus', component: CandidateTestStatusComponent }
 ];
 
 @NgModule({

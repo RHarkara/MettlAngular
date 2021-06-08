@@ -12,6 +12,7 @@ import {AssessmentListComponent} from './components/assessment-list/assessment-l
 import { MettlAccountinfoComponent } from './components/mettl-accountinfo/mettl-accountinfo.component';
 import { AllAssessmentsComponent } from './components/allassessments/allassessments.component';
 import { CreatescheduleComponent } from './components/createschedule/createschedule.component';
+import { CandidateTestStatusComponent } from './components/candidate-test-status/candidate-test-status.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CreatescheduleComponent } from './components/createschedule/createsched
     AssessmentListComponent,
     MettlAccountinfoComponent,
     AllAssessmentsComponent,
-    CreatescheduleComponent
+    CreatescheduleComponent,
+    CandidateTestStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -34,3 +36,8 @@ import { CreatescheduleComponent } from './components/createschedule/createsched
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export class Candidate{
+  name:string;
+  email:string;
+}
