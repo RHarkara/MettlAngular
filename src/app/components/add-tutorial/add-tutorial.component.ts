@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TutorialService } from 'src/app/services/tutorial.service';
 import {Candidate} from "../../app.module";
-
+import LocalBase from 'localbase';
 @Component({
   selector: 'app-add-tutorial',
   templateUrl: './add-tutorial.component.html',
@@ -56,6 +56,8 @@ export class AddTutorialComponent implements OnInit {
               this.createdSchedule = response.createdSchedule;
           }
           console.log(response);
+          let db = new LocalBase('Mettl_Integration');
+          db.collection('createdSchedule').add(response);
           this.submitted = true;
         },
         error => {

@@ -12,6 +12,9 @@ import {AssessmentListComponent} from './components/assessment-list/assessment-l
 import { MettlAccountinfoComponent } from './components/mettl-accountinfo/mettl-accountinfo.component';
 import { AllAssessmentsComponent } from './components/allassessments/allassessments.component';
 import { CreatescheduleComponent } from './components/createschedule/createschedule.component';
+import { LocalDataComponent } from './components/local-data/local-data.component';
+import { AccessKeyDataComponent } from './components/access-key-data/access-key-data.component';
+
 import { CandidateTestStatusComponent } from './components/candidate-test-status/candidate-test-status.component';
 
 @NgModule({
@@ -23,6 +26,10 @@ import { CandidateTestStatusComponent } from './components/candidate-test-status
     AssessmentListComponent,
     MettlAccountinfoComponent,
     AllAssessmentsComponent,
+    CreatescheduleComponent,
+    LocalDataComponent,
+    AccessKeyDataComponent,
+
     CreatescheduleComponent,
     CandidateTestStatusComponent
   ],
@@ -38,6 +45,6 @@ import { CandidateTestStatusComponent } from './components/candidate-test-status
 export class AppModule { }
 
 export class Candidate{
-  name:string;
-  email:string;
+  name: string;
+  email: string;
 }

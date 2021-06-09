@@ -24,6 +24,8 @@
     "@angular/router": "~10.0.0",
     "crypto": "^1.0.1",
     "crypto-js": "^4.0.0",
+    "idb": "^6.1.2",
+    "localbase": "^0.7.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

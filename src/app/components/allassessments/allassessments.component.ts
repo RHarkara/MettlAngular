@@ -3,6 +3,7 @@ import {GlobalConstants} from '../../global-constants';
 import {MettlApiService} from '../../services/mettl.api.service';
 import CryptoJS from 'crypto-js';
 import {MettlApiHelperService} from "../../services/mettl.api.helper.service";
+import LocalBase from 'localbase';
 
 @Component({
   selector: 'app-allassessments',
@@ -28,7 +29,11 @@ export class AllAssessmentsComponent implements OnInit {
         .subscribe(
             data => {
               this.assessmentList = data.assessments;
-              console.log(this.assessmentList);
+             for(let data of this.assessmentList){
+               data['timeStamp'] = new Date()
+               let db = new LocalBase('Mettl_Integration');
+               db.collection('assessmentList').add(data);
+             }
             },
             error => {
               console.log(error);

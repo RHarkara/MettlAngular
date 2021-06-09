@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-const baseUrl = 'http://localhost:8080/mettl-api-intg/v1';
+const baseUrl = 'http://localhost:8090/mettl-api-intg/v1';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,8 @@ export class TutorialService {
 
   getTestStatus(accessKey, email): Observable<any> {
     let testStatusURL;
-    if(email!=null) {
-      testStatusURL = baseUrl+'/schedules/'+accessKey+'/candidates/'+email;
+    if (email != null) {
+      testStatusURL = baseUrl + '/schedules/' + accessKey + '/candidates/' + email;
     }else {
       testStatusURL = baseUrl+'/schedules/'+accessKey+'/candidates';
     }
