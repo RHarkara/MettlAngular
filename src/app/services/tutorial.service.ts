@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 const baseUrl = 'http://localhost:8080/mettl-api-intg/v1';
 
 @Injectable({
@@ -20,6 +20,20 @@ export class TutorialService {
 
   createSchedule(data): Observable<any> {
     return this.http.post(baseUrl + '/assessments/schedules', data);
+  }
+
+  getSchedules(offset, limit): Observable<any> {
+    return this.http.get(baseUrl+'/schedules?offset='+offset+'&limit='+limit);
+  }
+
+  getTestStatus(accessKey, email): Observable<any> {
+    let testStatusURL;
+    if(email!=null) {
+      testStatusURL = baseUrl+'/schedules/'+accessKey+'/candidates/'+email;
+    }else {
+      testStatusURL = baseUrl+'/schedules/'+accessKey+'/candidates';
+    }
+    return this.http.get(testStatusURL);
   }
 
   get(id): Observable<any> {
